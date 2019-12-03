@@ -9,14 +9,14 @@ class comment extends Model
 {
     use SoftDeletes; 
 
-    protected $table = 'comment';
+    protected $table = 'comments';
     
 
     protected $hidden = ['created_at','updated_at'];
     protected $fillable = ['content', 'idpost','iduser']; 
     
             public function post() {
-        return $this->belongsTo('App\Post', 'idpost');
+        return $this->belongsTo('App\post', 'idpost');
     }
     
             public function user() {

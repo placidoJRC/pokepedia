@@ -1,6 +1,9 @@
 
 
 
+@extends('index');
+
+@section('content')
 
 
 <table class="table table-striped table-hover">
@@ -19,15 +22,18 @@
 
         <td>contenido</td>
         <td>
-            {{ $post->contenido }}
+            {{ $post->content }}
         </td>
 
-        <td>imagen</td>
+        <td>usuario</td>
         <td>
-            {{ $pokemon->user->id }}
+            {{ $post->user->name }}
         </td>
+        <td>
+<a href="{{ route('comment.create',['id'=>$post->id]) }}" class="btn btn-info">añadir comentarios</a>
+<a href="{{ route('comment.index',['id'=>$post->id]) }}" class="btn btn-info">ver comentarios</a>
 
-
+</td>
     </tr>
        @endforeach
 
@@ -35,3 +41,4 @@
 
 <a href="{{ route('pokemon.index') }}" class="btn btn-info">volver</a>
 
+@endsection

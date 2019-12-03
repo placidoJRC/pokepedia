@@ -1,4 +1,6 @@
+@extends('index');
 
+@section('content')
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -24,6 +26,7 @@
 
 
 
-<a href="{{ route('pokemon.index') }}" class="btn btn-info">volver</a>
+<a href="{{ url('') }}" class="btn btn-info">volver</a>
 <input type="submit" class="btn btn-primary" value="agregar">
 </form>
+@endsection

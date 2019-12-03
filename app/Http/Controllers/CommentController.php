@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\post;
+use App\Http\Requests\CommentRequest;
+use Illuminate\Support\Facades\Auth;
 
 use App\comment;
 use Illuminate\Http\Request;
@@ -14,7 +17,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+                $comment= Comment::all();
+            return view('comment.ver')->with(['comments'=>$comment]); 
+
     }
 
     /**
@@ -24,8 +29,8 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
-    }
+        
+        return view('comment.create');   }
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +38,27 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        //
+         $input=$request->validated();
+          $valores = array (
+                        "content" => $input['content'],
+                        "idpost" =>  $input['idpost'],
+                        "iduser"=> Auth::id(),
+                    );
+                    
+    
+         $comment= new Comment($valores);
+         
+          try{
+            $result = $comment->save();
+        }catch(\Exception $e){
+           
+        return redirect('comments/'.$comment->id.'edit');
+
+        }
+
+        return redirect(route('pokemon.index'));/*->with(['result'=> $result,'op'=>'store']);*/
     }
 
     /**
@@ -67,7 +90,7 @@ class CommentController extends Controller
      * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, comment $comment)
+    public function update(CommentRequest $request, comment $comment)
     {
         //
     }

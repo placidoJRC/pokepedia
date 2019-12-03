@@ -16,7 +16,7 @@ class post extends Model
     protected $fillable = ['subject','content', 'idpokemon','iduser']; 
     
             public function pokemon() {
-        return $this->belongsTo('App\Pokemon', 'idpokemon');
+        return $this->belongsTo('App\pokemon', 'idpokemon');
     }
     
             public function user() {

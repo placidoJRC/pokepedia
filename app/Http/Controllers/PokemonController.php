@@ -11,6 +11,10 @@ use App\abilityPokemon;
 
 class PokemonController extends Controller
 {
+    public function inicio(){
+            return view('pokemon.index');
+
+    }     
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +22,8 @@ class PokemonController extends Controller
      */
     public function index()
     {
-        return view('index')->with(['pokemons'=>Pokemon::all()]);
+           $pokemons= abilityPokemon::paginate(5);
+        return view('pokemon.ver')->with(['pokemons'=>$pokemons]);
 
     }
 
@@ -29,7 +34,7 @@ class PokemonController extends Controller
      */
     public function create()
     {
-        $pokemons= Pokemon::all();
+    $pokemons= Pokemon::all();
         return view('pokemon.create')->with(['pokemons'=>$pokemons]);
     }
 
@@ -44,7 +49,7 @@ class PokemonController extends Controller
         $name="";
         if($request->hasFile('imagen') && $request->file('imagen')->isValid()) {
         $file = $request->file('imagen');
-        $target = '../../../upload/';
+        $target = '../public/assets/img';
         $name = $file->getClientOriginalName();
         $file->move($target, $name);
         }
@@ -103,7 +108,7 @@ class PokemonController extends Controller
      */
     public function edit(pokemon $pokemon)
     {
-         return view('pokemon.edit')->with(['pokemon'=> $pokemon]);
+         return view ('pokemon.edit')->with(['pokemon'=> $pokemon]);
 
     }
 
@@ -123,7 +128,7 @@ class PokemonController extends Controller
         }catch(\Exception $e){
             $result = false;
          $error=['nombre'=>'El nombre utilizado ya existe en otro producto'];
-        return redirect('pokemon/'.$pokemon->id.'/edit')->withErrors($error)->withInput();
+        return redirect('pokemon/'.$pokemon->id.'edit')->withErrors($error)->withInput();
         }
         return redirect(route('pokemon.index'))->with(['result'=>$result,'op'=>'update']);
     }
@@ -159,9 +164,6 @@ class PokemonController extends Controller
         // return response()->file($target . $name);
         }
         
-         function ver(){
-             $pokemons= abilityPokemon::all();
-        return view('pokemon.ver')->with(['pokemons'=>$pokemons]);
-         }
+
 }
 

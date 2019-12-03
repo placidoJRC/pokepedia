@@ -19,9 +19,9 @@ Route::get('/','IndexController@index');
 
 Auth::routes(['verify'=>true]);
 Route::resource('pokemon', 'PokemonController');
-Route::resource('post', 'PostController');
-Route::get('pokemon/ver','PokemonController@ver');
-Route::get('post/ver','PostController@ver');
+Route::resource('post', 'PostController')->middleware('verified');;
+Route::resource('comment', 'CommentController')->middleware('verified');;
+Route::get('pokemon/create', 'PokemonController@create')->middleware('verified');
 
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'PokemonController@inicio');
